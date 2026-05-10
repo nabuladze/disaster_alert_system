@@ -1,0 +1,34 @@
+:root {
+
+    --primary-color: #1E3A5F;
+    --secondary-color: #29527D;
+
+    --danger-color: #D62828;
+    --warning-color: #F77F00;
+    --safe-color: #2A9D8F;
+
+    --background-color: #F4F7FA;
+    --white-color: #FFFFFF;
+
+    --text-color: #222222;
+
+    --border-radius: 12px;
+
+    --shadow:
+        0 0 10px rgba(0,0,0,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    background-color: var(--background-color);
+
+    color: var(--text-color);
+}

@@ -26,7 +26,7 @@ This project is a web-based early warning system for natural disasters. It provi
 
 ```text
 disaster_alert_system/
-├── Backend/
+├── backend/
 │   ├── app/
 │   │   ├── Models/
 │   │   ├── Routes/
