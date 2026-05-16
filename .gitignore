@@ -5,15 +5,22 @@ __pycache__/
 # Virtual environment
 .venv/
 
-# Database
-*.db
-
 # Environment variables
 .env
 
-# PyCharm
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# FastAPI / Python testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDEs
 .idea/
+.vscode/
 
 # macOS
 .DS_Store
-
