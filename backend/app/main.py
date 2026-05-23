@@ -1,6 +1,7 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Security
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from app.jwt_handler import create_access_token
+from app.jwt_handler import create_access_token, verify_token
 from app.auth import verify_password
 from app.weather import get_weather
 from app.risk_engine import analyze_risk
@@ -13,6 +14,7 @@ from app.auth import hash_password
 
 # FastAPI აპლიკაციის შექმნა
 app = FastAPI()
+security = HTTPBearer()
 
 # ცხრილების ავტომატური შექმნა DB-ში
 Base.metadata.create_all(bind=engine)
@@ -29,8 +31,17 @@ def root():
 def register(user: UserCreate, db: Session = Depends(get_db)):
     hashed_pw = hash_password(user.password)
 
+    existing_user = (
+        db.query(User)
+        .filter(User.phone == user.phone)
+        .first()
+    )
+
+    if existing_user:
+        return {"error": "Phone number already registered"}
+
     new_user = User(
-        email=user.email,
+        phone=user.phone,
         password=hashed_pw,
         region=user.region
     )
@@ -48,7 +59,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 # login API
 @app.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == user.email).first()
+    db_user = db.query(User).filter(User.phone == user.phone).first()
 
     if not db_user:
         return {"error": "User not found"}
@@ -256,4 +267,73 @@ def api_info():
             "Alert generation",
             "Region-based alerts"
         ]
+    }
+
+@app.get("/protected")
+def protected_route(
+    credentials: HTTPAuthorizationCredentials = Security(security)
+):
+
+    token = credentials.credentials
+
+    payload = verify_token(token)
+
+    if not payload:
+        return {"error": "Invalid or expired token"}
+
+    return {
+        "message": "Protected route accessed successfully",
+        "user_data": payload
+    }
+
+@app.put("/users/{user_id}/region")
+def update_user_region(
+    user_id: int,
+    new_region: str,
+    db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        return {"error": "User not found"}
+
+    user.region = new_region
+
+    db.commit()
+    db.refresh(user)
+
+    return {
+        "message": "User region updated successfully",
+        "user_id": user.id,
+        "new_region": user.region
+    }
+
+@app.put("/me/region")
+def update_my_region(
+        new_region: str,
+        credentials: HTTPAuthorizationCredentials = Security(security),
+        db: Session = Depends(get_db)
+):
+    token = credentials.credentials
+    payload = verify_token(token)
+
+    if not payload:
+        return {"error": "Invalid or expired token"}
+
+    user_id = payload.get("user_id")
+
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        return {"error": "User not found"}
+
+    user.region = new_region
+
+    db.commit()
+    db.refresh(user)
+
+    return{
+        "message": "Your region updated successfully",
+        "user_id": user.id,
+        "new_region": user.region
     }
