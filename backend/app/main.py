@@ -81,7 +81,7 @@ def weather(city: str):
     return get_weather(city)
 
 
-# test risk API without OpenWeather
+# test risk API without OpenWeather,used only for development/demo
 @app.get("/test-risk")
 def test_risk():
     sample_weather = {
@@ -94,7 +94,7 @@ def test_risk():
     return analyze_risk(sample_weather)
 
 
-# create fixed test alert
+# create fixed test alert, used only for development/demo
 @app.post("/create-alert")
 def create_alert(db: Session = Depends(get_db)):
     new_alert = Alert(
