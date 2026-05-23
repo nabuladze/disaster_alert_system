@@ -40,10 +40,19 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     if existing_user:
         return {"error": "Phone number already registered"}
 
+    if not user.accepted_terms:
+        return {"error": "You must accept terms and conditions"}
+
     new_user = User(
+        first_name=user.first_name,
+        last_name=user.last_name,
+        date_of_birth=user.date_of_birth,
         phone=user.phone,
         password=hashed_pw,
-        region=user.region
+        region=user.region,
+        latitude=user.latitude,
+        longitude=user.longitude,
+        accepted_terms = user.accepted_terms
     )
 
     db.add(new_user)
