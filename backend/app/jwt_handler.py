@@ -1,30 +1,47 @@
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 
-#საიდუმლო key (რეალურ პროექტში, .env ფაილში ინახება)
+# საიდუმლო key
 SECRET_KEY = "supersecretkey123"
 
-#ალგორითმი ტოკენის დასაშიფრად
+# ალგორითმი
 ALGORITHM = "HS256"
 
-#ტოკენის სიცოცხლის დრო (წუთებში)
-ACCESS_TOKEN_EXPIRE_MINUTE = 30
+# ტოკენის სიცოცხლის დრო
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-#JWT ტოკენის შექმნა
+# JWT ტოკენის შექმნა
 def create_access_token(data: dict):
 
-    #ვაკოპირებთ მონაცემებს
     to_encode = data.copy()
 
-    #ვადგენთ ვადის გასვლის დროს
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTE)
+    expire = datetime.utcnow() + timedelta(
+        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+    )
 
-    #ვამატებთ ვადის ინფორმაციას
     to_encode.update({"exp": expire})
 
-    #ვშიფრავთ JWT ტოკენად
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(
+        to_encode,
+        SECRET_KEY,
+        algorithm=ALGORITHM
+    )
 
     return encoded_jwt
 
+
+# JWT ტოკენის გადამოწმება
+def verify_token(token: str):
+
+    try:
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+
+        return payload
+
+    except JWTError:
+        return None

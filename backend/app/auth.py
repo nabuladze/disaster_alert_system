@@ -1,16 +1,14 @@
 from passlib.context import CryptContext
 
-# ვაიძულებთ bcrypt backend-ს გამოყენებას
 pwd_context = CryptContext(
-    schemes=["bcrypt"],
-    deprecated="auto",
-    bcrypt__rounds=12
+    schemes=["bcrypt_sha256"],
+    deprecated="auto"
 )
 
+
 def hash_password(password: str):
-    # პაროლის დაშიფვრა
     return pwd_context.hash(password)
 
-def verify_password(plain_password, hashed_password):
-    # პაროლის შემოწმება
+
+def verify_password(plain_password: str, hashed_password: str):
     return pwd_context.verify(plain_password, hashed_password)

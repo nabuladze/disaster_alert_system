@@ -1,5 +1,5 @@
 #user model
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Date, Float, Boolean
 from datetime import datetime
 from app.database import Base
 
@@ -10,14 +10,23 @@ class User(Base):
     #უნიკალური ID თითოეული მომხმარებლისთვის
     id = Column(Integer, primary_key=True, index=True)
 
-    #email უნდა იყოს უნიკალური
-    email = Column(String, unique=True, index=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    date_of_birth = Column(Date)
+
+    #phone number უნდა იყოს უნიკალური
+    phone = Column(String, unique=True, index=True)
 
     #დაშიფრული პაროლი ინახება აქ
     password = Column(String)
 
     #მომხმარებლის რეგიონი
     region = Column(String)
+
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+
+    accepted_terms = Column(Boolean, default=False)
 
 class Alert(Base):
     __tablename__ = "alerts"
