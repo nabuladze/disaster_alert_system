@@ -3,7 +3,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from app.jwt_handler import create_access_token, verify_token
 from app.auth import verify_password
-from app.weather import get_weather
+from app.weather import get_weather, get_weather_by_coordinates
 from app.risk_engine import analyze_risk
 
 # ჩვენი ფაილები
@@ -50,6 +50,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         phone=user.phone,
         password=hashed_pw,
         region=user.region,
+        city=user.city,
         latitude=user.latitude,
         longitude=user.longitude,
         accepted_terms = user.accepted_terms
@@ -214,20 +215,25 @@ def get_users_by_region(region: str, db: Session = Depends(get_db)):
 
     return users
 
-@app.post("/generate-alert-for-region/{region}")
-def generate_alert_for_region(region: str, db: Session = Depends(get_db)):
-    users = db.query(User).filter(User.region == region).all()
+@app.post("/generate-alert-for-city/{city}")
+def generate_alert_for_city(city: str, db: Session = Depends(get_db)):
+    users = db.query(User).filter(User.city == city).all()
 
     if not users:
-        return {"error": "No users found in this region"}
+        return {"error": "No users found in this city"}
 
-    weather_data = get_weather(region)
+    first_user = users[0]
+
+    weather_data = get_weather_by_coordinates(
+        first_user.latitude,
+        first_user.longitude
+    )
 
     if "error" in weather_data:
         return weather_data
 
     new_alert = Alert(
-        city=region,
+        city=first_user.city,
         risk_level=weather_data["risk_level"],
         disaster_type=weather_data["disaster_type"],
         recommendation=weather_data["recommendation"]
@@ -238,8 +244,8 @@ def generate_alert_for_region(region: str, db: Session = Depends(get_db)):
     db.refresh(new_alert)
 
     return {
-        "message": "Alert generated for region users",
-        "region": region,
+        "message": "Alert generated for city users",
+        "city": first_user.city,
         "affected_users": len(users),
         "alert_id": new_alert.id,
         "weather": weather_data

@@ -20,8 +20,8 @@ class User(Base):
     #დაშიფრული პაროლი ინახება აქ
     password = Column(String)
 
-    #მომხმარებლის რეგიონი
     region = Column(String)
+    city = Column(String)
 
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)

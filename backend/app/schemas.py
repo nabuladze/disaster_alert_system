@@ -12,6 +12,7 @@ class UserCreate(BaseModel):
     phone: str
     password: str
     region: str
+    city: str
     latitude: Optional[float] = None
     longitude: Optional[float] = None
     accepted_terms: bool
