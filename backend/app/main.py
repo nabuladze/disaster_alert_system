@@ -90,20 +90,6 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 def weather(city: str):
     return get_weather(city)
 
-
-# test risk API without OpenWeather,used only for development/demo
-@app.get("/test-risk")
-def test_risk():
-    sample_weather = {
-        "city": "Tbilisi",
-        "temperature": 25,
-        "weather": "heavy rain",
-        "wind_speed": 5
-    }
-
-    return analyze_risk(sample_weather)
-
-
 # create fixed test alert, used only for development/demo
 @app.post("/create-alert")
 def create_alert(db: Session = Depends(get_db)):
@@ -120,32 +106,6 @@ def create_alert(db: Session = Depends(get_db)):
 
     return {
         "message": "Alert saved successfully",
-        "alert_id": new_alert.id
-    }
-
-
-# generate alert from real OpenWeather data
-@app.post("/generate-alert/{city}")
-def generate_alert(city: str, db: Session = Depends(get_db)):
-    weather_data = get_weather(city)
-
-    if "error" in weather_data:
-        return weather_data
-
-    new_alert = Alert(
-        city=weather_data["city"],
-        risk_level=weather_data["risk_level"],
-        disaster_type=weather_data["disaster_type"],
-        recommendation=weather_data["recommendation"]
-    )
-
-    db.add(new_alert)
-    db.commit()
-    db.refresh(new_alert)
-
-    return {
-        "message": "Alert generated and saved successfully",
-        "weather": weather_data,
         "alert_id": new_alert.id
     }
 
@@ -262,27 +222,6 @@ def get_active_alerts(db: Session = Depends(get_db)):
 
     return alerts
 
-@app.get("/health")
-def health_check():
-    return {
-        "status": "ok",
-        "message": "API is running"
-    }
-
-@app.get("/api-info")
-def api_info():
-    return {
-        "project": "Natural Disaster Early Warning System",
-        "version": "1.0",
-        "features": [
-            "User registration",
-            "User login with JWT",
-            "Weather data integration",
-            "Risk analysis",
-            "Alert generation",
-            "Region-based alerts"
-        ]
-    }
 
 @app.get("/protected")
 def protected_route(
@@ -301,27 +240,6 @@ def protected_route(
         "user_data": payload
     }
 
-@app.put("/users/{user_id}/region")
-def update_user_region(
-    user_id: int,
-    new_region: str,
-    db: Session = Depends(get_db)
-):
-    user = db.query(User).filter(User.id == user_id).first()
-
-    if not user:
-        return {"error": "User not found"}
-
-    user.region = new_region
-
-    db.commit()
-    db.refresh(user)
-
-    return {
-        "message": "User region updated successfully",
-        "user_id": user.id,
-        "new_region": user.region
-    }
 
 @app.put("/me/region")
 def update_my_region(

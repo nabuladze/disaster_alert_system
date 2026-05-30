@@ -31,11 +31,7 @@ def get_weather(city: str):
     response = requests.get(url)
 
     if response.status_code != 200:
-        return {
-            "error": "Could not fetch weather data",
-            "status_code": response.status_code,
-            "details": response.json()
-        }
+        return {"error": "Could not fetch weather data"}
 
     data = response.json()
     return build_weather_response(data)
@@ -50,11 +46,7 @@ def get_weather_by_coordinates(latitude: float, longitude: float):
     response = requests.get(url)
 
     if response.status_code != 200:
-        return {
-            "error": "Could not fetch weather data",
-            "status_code": response.status_code,
-            "details": response.json()
-        }
+        return {"error": "Could not fetch weather data"}
 
     data = response.json()
     return build_weather_response(data)
