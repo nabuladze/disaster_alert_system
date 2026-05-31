@@ -1,0 +1,221 @@
+.registerPage {
+    min-height: 100vh;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerPhone {
+    width: 390px;
+    min-height: 844px;
+    background: white;
+    padding: 42px 22px 32px;
+
+}
+
+.smallLogo {
+    width: 34px;
+    height: 34px;
+    background: #ffdce5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.smallShield {
+    width: 14px;
+    height: 18px;
+    background: #ff3347;
+    border-radius: 50% 50% 60% 60%;
+}
+
+.registerPhone h1 {
+    color: #ff3347;
+    font-size: 28px;
+    margin: 0 0 10px;
+}
+
+.subtitle {
+    color: #777;
+    font-size: 14px;
+    width: 100%;
+    line-height: 1.4;
+    margin-bottom: 28px;
+}
+
+.registerForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.registerForm label {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.registerForm input,
+.registerForm select {
+    height: 42px;
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 14px;
+    margin-bottom: 18px;
+    outline: none;
+}
+
+.mapBtn {
+    width: 150px;
+    height: 42px;
+    align-self: flex-end;
+    background: white;
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.termsRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.termsRow input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.termsRow p {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.termsRow span {
+    color: #2f6bff;
+}
+
+.submitBtn {
+    height: 50px;
+    background: #ffdce5;
+    color: #ff3347;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.loginText {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+}
+
+.loginText span {
+    color: #ff3347;
+    font-weight: bold;
+}
+
+.registerPhone {
+  text-align: left;
+}
+
+.registerPhone h1,
+.subtitle,
+.registerForm label {
+  text-align: left;
+}
+
+.registerForm {
+  align-items: stretch;
+}
+
+.termsRow span {
+  color: #2f6bff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modalBox {
+  width: 340px;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: left;
+}
+
+.modalBox h2 {
+  color: #ff3347;
+  margin-top: 0;
+}
+
+.modalBox p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.modalBox button {
+  width: 100%;
+  height: 44px;
+  background: #ffdce5;
+  color: #ff3347;
+  border: none;
+  border-radius: 9px;
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
