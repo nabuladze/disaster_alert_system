@@ -5,6 +5,7 @@ from app.jwt_handler import create_access_token, verify_token
 from app.auth import verify_password
 from app.weather import get_weather, get_weather_by_coordinates
 from app.risk_engine import analyze_risk
+from fastapi.middleware.cors import CORSMiddleware
 
 # ჩვენი ფაილები
 from app.database import engine, get_db
@@ -14,6 +15,16 @@ from app.auth import hash_password
 
 # FastAPI აპლიკაციის შექმნა
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 security = HTTPBearer()
 
 # ცხრილების ავტომატური შექმნა DB-ში

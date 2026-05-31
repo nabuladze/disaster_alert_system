@@ -9,12 +9,20 @@ def analyze_risk(weather_data):
     recommendation = "Weather conditions are safe."
 
     # flood risk
-    if "rain" in weather_description:
+    if "heavy rain" in weather_description or "heavy intensity rain" in weather_description or "very heavy rain" in weather_description:
         risk_level = "High"
         disaster_type = "Flood"
         recommendation = (
             "Avoid rivers and low areas. "
             "Follow local emergency instructions."
+        )
+
+    # heavy rain risk
+    elif "rain" in weather_description:
+        risk_level = "Medium"
+        disaster_type = "Heavy Rain"
+        recommendation = (
+            "Be careful when travelling and avoid flooded roads."
         )
 
     # storm risk
