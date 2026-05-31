@@ -251,6 +251,34 @@ def protected_route(
         "user_data": payload
     }
 
+@app.get("/me")
+def get_me(
+    credentials: HTTPAuthorizationCredentials = Security(security),
+    db: Session = Depends(get_db)
+):
+    token = credentials.credentials
+    payload = verify_token(token)
+
+    if not payload:
+        return {"error": "Invalid or expired token"}
+
+    user_id = payload.get("user_id")
+
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        return {"error": "User not found"}
+
+    return {
+        "id": user.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "phone": user.phone,
+        "region": user.region,
+        "city": user.city,
+        "latitude": user.latitude,
+        "longitude": user.longitude
+    }
 
 @app.put("/me/region")
 def update_my_region(
