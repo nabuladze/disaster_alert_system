@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import {
@@ -9,8 +11,45 @@ import {
 } from "react-icons/fi";
 
 function Home() {
-  const userName = "ნანა";
-  const city = "თბილისი";
+  const [userName, setUserName] = useState("");
+  const [city, setCity] = useState("");
+  const [region, setRegion] = useState("");
+
+  const cityTranslations = {
+  Tbilisi: "თბილისი",
+  Batumi: "ბათუმი",
+  Kutaisi: "ქუთაისი",
+  Akhaltsikhe: "ახალციხე",
+  Telavi: "თელავი",
+  Rustavi: "რუსთავი",
+  Gori: "გორი",
+  Zugdidi: "ზუგდიდი",
+  Poti: "ფოთი",
+  Senaki: "სენაკი",
+};
+
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return;
+  }
+
+  axios
+    .get("http://127.0.0.1:8000/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      setUserName(response.data.first_name);
+      setCity(response.data.city);
+      setRegion(response.data.region);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}, []);
 
   const hasDanger = true;
   const disasterType = "წყალდიდობა";
@@ -26,20 +65,19 @@ function Home() {
             <h2>GeoAlert</h2>
           </div>
 
-          <button
-              className="bellButton"
-              onClick={() => alert("შეტყობინებების ისტორია მალე დაემატება")}
-          >
-            <FiBell/>
-          </button>
+          <Link to="/notifications" className="bellButton">
+  <FiBell />
+</Link>
         </div>
 
         <h1 className="homeGreeting">გამარჯობა, {userName}</h1>
 
-        <p className="locationText">თქვენი მდებარეობა: {city}</p>
+        <p className="locationText">
+          თქვენი მდებარეობა: {cityTranslations[city] || city}
+        </p>
 
         <div className={hasDanger ? "alertCard danger" : "alertCard safe"}>
-          <div className="alertIcon">!</div>
+        <div className="alertIcon">!</div>
 
 
           <h2>
@@ -65,12 +103,12 @@ function Home() {
 
         </div>
 
-        <p className="sectionTitle english">ახლომდებარე ქალაქები:</p>
+        <p className="sectionTitle english">ახლომდებარე ქალაქი:</p>
 
         <div className={nearbyHasDanger ? "nearbyCard danger" : "nearbyCard safe"}>
           <div className="nearbyIcon"></div>
           <div>
-            <p className="nearbySmall">ქალაქი: თბილისი</p>
+            <p className="nearbySmall">ბორჯომი</p>
             <h3>
               {nearbyHasDanger
                   ? "მეზობელ ქალაქში ფიქსირდება საფრთხე"

@@ -1,0 +1,194 @@
+.notificationsPage {
+  min-height: 100vh;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+}
+
+.notificationsPhone {
+  width: 390px;
+  min-height: 844px;
+  background: white;
+  padding: 24px;
+}
+
+.notificationsHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.backButton {
+  color: #ff3347;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.notificationsHeader h1 {
+  margin: 0;
+  color: #ff3347;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.cityText {
+  text-align: left;
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.cityText span {
+  color: #ff3347;
+  font-weight: bold;
+}
+
+.emptyCard {
+  background: #fff5f7;
+  border: 1px solid #ffe0e6;
+  border-radius: 20px;
+  padding: 36px 22px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.emptyIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #ffdce5;
+  color: #ff3347;
+  margin: 0 auto 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.emptyIcon svg {
+  font-size: 36px;
+}
+
+.emptyCard h2 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.emptyCard p {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.notificationsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notificationCard {
+  border: 1px solid #e8e8e8;
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  text-align: left;
+  background: white;
+}
+
+.notificationIcon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notificationIcon svg {
+  font-size: 28px;
+}
+
+.blueBg {
+  background: #e8f1ff;
+  color: #1565c0;
+}
+
+.orangeBg {
+  background: #fff1e2;
+  color: #e58a17;
+}
+
+.darkBlueBg {
+  background: #e9eef7;
+  color: #355f91;
+}
+
+.heatBg {
+  background: #fff0e5;
+  color: #f26b1d;
+}
+
+.safeBg {
+  background: #e6f7ed;
+  color: #2eb872;
+}
+
+.notificationContent {
+  flex: 1;
+}
+
+.notificationTop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.notificationTop h3 {
+  margin: 0;
+  color: #222;
+  font-size: 17px;
+}
+
+.riskBadge {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.riskBadge.high {
+  background: #ffdce5;
+  color: #ff3347;
+}
+
+.riskBadge.medium {
+  background: #fff1d8;
+  color: #e58a17;
+}
+
+.riskBadge.low {
+  background: #e6f7ed;
+  color: #2eb872;
+}
+
+.recommendationText {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0 0 10px;
+}
+
+.notificationDate {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}

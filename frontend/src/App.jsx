@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Advices from "./pages/Advices";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/home" element={<Home />} />
 
         <Route path="/advices" element={<Advices />} />
+
+        <Route path="/notifications" element={<Notifications />} />
 
       </Routes>
 
