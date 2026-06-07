@@ -10,8 +10,8 @@
   min-height: 844px;
   background: white;
   padding: 24px;
-  position: relative;
   padding-bottom: 100px;
+  position: relative;
 }
 
 .topBar {
@@ -43,21 +43,18 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: none;
   background: #ffdce5;
-  cursor: pointer;
-
+  color: #ff3347;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  color: #ff3347;
+  text-decoration: none;
   font-size: 20px;
 }
 
 .homeGreeting {
   color: #ff3347;
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 800;
   margin-top: 28px;
   margin-bottom: 8px;
@@ -67,145 +64,216 @@
 .locationText {
   color: #777;
   font-size: 14px;
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.statusCard {
+  border-radius: 20px;
+  padding: 18px;
   margin-bottom: 24px;
+  display: flex;
+  gap: 14px;
   text-align: left;
+  border: 1px solid;
 }
 
-.alertCard {
-  border-radius: 24px;
-  padding: 24px;
-  color: white;
-  margin-bottom: 28px;
-  text-align: left;
+.statusCard.safe {
+  background: #f0fbf5;
+  border-color: #ccefd9;
 }
 
-.alertCard h2,
-.alertCard p {
-  color: white;
-  text-align: left;
+.statusCard.danger {
+  background: #fff4f5;
+  border-color: #ffb8c0;
 }
 
-.alertCard.danger {
-  background: #ff4a57;
-}
-
-.alertCard.safe {
-  background: #2eb872;
-}
-
-.alertIcon {
-  width: 42px;
-  height: 42px;
+.statusIcon {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.25);
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-  margin-bottom: 14px;
 }
 
-.alertBadge {
-  font-size: 12px;
-  opacity: 0.9;
-  margin-bottom: 10px;
+.statusCard.safe .statusIcon {
+  background: #e6f7ed;
+  color: #2eb872;
 }
 
-.alertCard h2 {
-  margin: 0 0 10px 0;
+.statusCard.danger .statusIcon {
+  background: #ffdce5;
+  color: #ff3347;
+}
+
+.statusIcon svg {
   font-size: 24px;
 }
 
-.alertDescription {
-  font-size: 14px;
+.statusCard h2 {
+  color: #222;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.statusCard.danger h2 {
+  color: #ff3347;
+}
+
+.statusCard p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
   line-height: 1.5;
 }
 
 .recommendButton {
   display: inline-block;
-  margin-top: 16px;
-  background: white;
-  color: #ff3347;
+  margin-top: 14px;
+  background: #ff3347;
+  color: white;
   text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
   font-weight: bold;
 }
 
 .sectionTitle {
-  font-size: 14px;
-  color: #555;
+  font-size: 15px;
+  color: #333;
   margin-bottom: 10px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.weatherCard {
+  border: 1px solid #dbe8f8;
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 24px;
+  background: #f8fbff;
   text-align: left;
 }
 
-.english {
-  margin-top: 24px;
+.weatherTop {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
 }
 
-.mapCard {
-  height: 160px;
-  background: #ececec;
-  border-radius: 24px;
-  position: relative;
-  overflow: hidden;
+.weatherIconBox {
+  width: 70px;
+  height: 70px;
+  border-radius: 22px;
+  background: #e8f1ff;
+  color: #1565c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mapPin {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #ff3347;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.weatherIconBox svg {
+  font-size: 38px;
 }
 
-.riskLabel {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  background: white;
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-size: 13px;
+.weatherTop h2 {
+  margin: 0;
+  font-size: 34px;
+  color: #222;
+  font-weight: 500;
+}
+
+.weatherTop p {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.weatherDetails {
+  border-top: 1px solid #e4edf8;
+  padding-top: 12px;
+}
+
+.weatherDetails p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 9px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.weatherDetails svg {
+  color: #1565c0;
+  font-size: 18px;
 }
 
 .nearbyCard {
-  border-radius: 20px;
-  padding: 18px;
+  border-radius: 18px;
+  padding: 16px;
   display: flex;
   gap: 14px;
   text-align: left;
+  align-items: center;
+  margin-bottom: 22px;
+  border: 1px solid;
 }
 
 .nearbyCard.safe {
-  background: #2eb872;
-  color: white;
+  background: #ffffff;
+  border-color: #d8eedd;
 }
 
 .nearbyCard.danger {
-  background: #ffe0e3;
+  background: #fff4f5;
+  border-color: #ffb8c0;
 }
 
 .nearbyIcon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: white;
+  background: #e6f7ed;
+  color: #2eb872;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nearbyCard.danger .nearbyIcon {
+  background: #ffdce5;
+  color: #ff3347;
+}
+
+.nearbyIcon svg {
+  font-size: 22px;
 }
 
 .nearbySmall {
-  margin: 0;
-  color: #FFE1E8;
-  font-size: 13px;
-  text-align: left;
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .nearbyCard h3 {
-  margin: 4px 0 0 0;
-  font-size: 16px;
+  margin: 0;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.nearbyCard.safe h3 {
+  color: #2eb872;
+}
+
+.nearbyCard.danger h3 {
+  color: #ff3347;
 }
 
 .bottomNav {
@@ -218,17 +286,6 @@
   align-items: center;
   padding: 14px 0;
   border-top: 1px solid #e5e5e5;
-}
-
-.bottomNav a {
-  text-decoration: none;
-  color: #888;
-  font-size: 14px;
-}
-
-.bottomNav a.active {
-  color: #ff3347;
-  font-weight: bold;
 }
 
 .navItem {

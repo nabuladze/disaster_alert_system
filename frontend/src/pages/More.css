@@ -1,0 +1,224 @@
+.morePage {
+  min-height: 100vh;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+}
+
+.morePhone {
+  width: 390px;
+  min-height: 844px;
+  background: white;
+  padding: 34px 24px 100px;
+  position: relative;
+}
+
+.moreHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.moreLogoCircle,
+.versionLogoCircle {
+  background: #ffdce5;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moreLogoCircle {
+  width: 42px;
+  height: 42px;
+}
+
+.versionLogoCircle {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+}
+
+.moreLogoShield {
+  width: 16px;
+  height: 18px;
+  background: #ff3347;
+  border-radius: 50% 50% 60% 60%;
+}
+
+.versionLogoShield {
+  width: 24px;
+  height: 28px;
+  background: #ff3347;
+  border-radius: 50% 50% 60% 60%;
+}
+
+.moreHeader h1 {
+  margin: 0;
+  color: #ff3347;
+  font-size: 28px;
+}
+
+.moreTitle {
+  font-size: 34px;
+  margin-top: 44px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.moreSubtitle {
+  color: #777;
+  text-align: left;
+  margin-bottom: 34px;
+}
+
+.moreCard {
+  border: 1px solid #e8e8e8;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  cursor: pointer;
+  background: white;
+}
+
+.moreIconBox {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: #ffdce5;
+  color: #ff3347;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.moreIconBox svg {
+  font-size: 26px;
+}
+
+.moreCardText {
+  flex: 1;
+  text-align: left;
+}
+
+.moreCardText h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+
+.moreCardText p {
+  margin: 0;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.arrowIcon {
+  color: #ff3347;
+  font-size: 24px;
+}
+
+.versionBox {
+  text-align: center;
+  margin-top: 64px;
+}
+
+.versionBox h3 {
+  color: #ff3347;
+  font-size: 26px;
+  margin: 0 0 8px;
+}
+
+.versionBox p {
+  color: #777;
+  margin: 0;
+}
+
+.moreModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.moreModal {
+  width: 340px;
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  text-align: left;
+}
+
+.moreModal h2 {
+  margin-top: 0;
+  color: #ff3347;
+}
+
+.moreModal p {
+  color: #666;
+  line-height: 1.5;
+}
+
+.moreModal button {
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  background: #ff3347;
+  color: white;
+  font-weight: bold;
+  margin-top: 18px;
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  width: 390px;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #888;
+  gap: 4px;
+}
+
+.navItem svg {
+  font-size: 22px;
+}
+
+.navItem p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.navItem.active {
+  color: #ff3347;
+}
+
+.numbersList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.numbersList p {
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}

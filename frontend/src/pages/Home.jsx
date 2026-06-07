@@ -7,52 +7,74 @@ import {
   FiUser,
   FiShield,
   FiMoreHorizontal,
-  FiBell
+  FiBell,
+  FiCloudRain,
+  FiWind,
+  FiThermometer,
+  FiAlertCircle,
+  FiCheckCircle,
+  FiMapPin
 } from "react-icons/fi";
 
 function Home() {
   const [userName, setUserName] = useState("");
   const [city, setCity] = useState("");
-  const [region, setRegion] = useState("");
+  const [weatherData, setWeatherData] = useState(null);
 
   const cityTranslations = {
-  Tbilisi: "თბილისი",
-  Batumi: "ბათუმი",
-  Kutaisi: "ქუთაისი",
-  Akhaltsikhe: "ახალციხე",
-  Telavi: "თელავი",
-  Rustavi: "რუსთავი",
-  Gori: "გორი",
-  Zugdidi: "ზუგდიდი",
-  Poti: "ფოთი",
-  Senaki: "სენაკი",
-};
+    Tbilisi: "თბილისი",
+    Batumi: "ბათუმი",
+    Kutaisi: "ქუთაისი",
+    Akhaltsikhe: "ახალციხე",
+    Telavi: "თელავი",
+    Rustavi: "რუსთავი",
+    Gori: "გორი",
+    Zugdidi: "ზუგდიდი",
+    Poti: "ფოთი",
+    Senaki: "სენაკი",
+    Borjomi: "ბორჯომი",
+  };
 
   useEffect(() => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    return;
-  }
+    if (!token) return;
 
-  axios
-    .get("http://127.0.0.1:8000/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      setUserName(response.data.first_name);
-      setCity(response.data.city);
-      setRegion(response.data.region);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}, []);
+    axios
+      .get("http://127.0.0.1:8000/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const userCity = response.data.city;
 
-  const hasDanger = true;
-  const disasterType = "წყალდიდობა";
+        setUserName(response.data.first_name);
+        setCity(userCity);
+
+        return axios.get(`http://127.0.0.1:8000/weather/${userCity}`);
+      })
+      .then((response) => {
+        setWeatherData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const hasDanger = weatherData && weatherData.disaster_type !== "No danger";
+
+  const disasterTypeTranslations = {
+    Flood: "წყალდიდობა",
+    "Heavy Rain": "ძლიერი ნალექი",
+    Storm: "ძლიერი ქარი",
+    "Extreme Heat": "მაღალი ტემპერატურა",
+    "No danger": "საფრთხე არ არის",
+  };
+
+  const currentDisaster = weatherData
+    ? disasterTypeTranslations[weatherData.disaster_type] || weatherData.disaster_type
+    : "";
 
   const nearbyHasDanger = false;
 
@@ -66,8 +88,8 @@ function Home() {
           </div>
 
           <Link to="/notifications" className="bellButton">
-  <FiBell />
-</Link>
+            <FiBell />
+          </Link>
         </div>
 
         <h1 className="homeGreeting">გამარჯობა, {userName}</h1>
@@ -76,69 +98,105 @@ function Home() {
           თქვენი მდებარეობა: {cityTranslations[city] || city}
         </p>
 
-        <div className={hasDanger ? "alertCard danger" : "alertCard safe"}>
-        <div className="alertIcon">!</div>
+        <div className={hasDanger ? "statusCard danger" : "statusCard safe"}>
+          <div className="statusIcon">
+            {hasDanger ? <FiAlertCircle /> : <FiCheckCircle />}
+          </div>
 
+          <div>
+            <h2>
+              {weatherData
+                ? hasDanger
+                  ? `მოსალოდნელია ${currentDisaster}`
+                  : "ამჟამად საფრთხე არ ფიქსირდება"
+                : "მონაცემები იტვირთება..."}
+            </h2>
 
-          <h2>
-            {hasDanger
-                ? `მოსალოდნელია ${disasterType}`
-                : "მოსალოდნელი საფრთხე არ არის"}
-          </h2>
+            <p>
+              {weatherData
+                ? hasDanger
+                  ? weatherData.recommendation
+                  : "ამ დროისთვის თქვენს ქალაქში ამინდის მხრივ საფრთხე არ ფიქსირდება."
+                : "გთხოვთ დაელოდოთ..."}
+            </p>
 
-          <p className="alertDescription">
-            {hasDanger
-                ? "დეტალური რეკომენდაციების სანახავად გადადით რჩევების გვერდზე."
-                : "ამ დროისთვის თქვენს ქალაქში საფრთხე არ ფიქსირდება."}
-          </p>
-
-          <Link to="/advices" className="recommendButton">
-            რეკომენდაციების ნახვა
-          </Link>
+            {hasDanger && (
+              <Link to="/advices" className="recommendButton">
+                რეკომენდაციების ნახვა
+              </Link>
+            )}
+          </div>
         </div>
 
-        <p className="sectionTitle">ამჟამინდელი ლოკაცია:</p>
+        <p className="sectionTitle">ამინდი თქვენს ქალაქში</p>
 
-        <div className="mapCard">
+        <div className="weatherCard">
+          <div className="weatherTop">
+            <div className="weatherIconBox">
+              <FiCloudRain />
+            </div>
 
+            <div>
+              <h2>{weatherData ? Math.round(weatherData.temperature) : "--"}°C</h2>
+              <p>{weatherData ? weatherData.weather : "იტვირთება..."}</p>
+            </div>
+          </div>
+
+          <div className="weatherDetails">
+            <p>
+              <FiWind />
+              ქარი: {weatherData ? weatherData.wind_speed : "--"} მ/წმ
+            </p>
+
+            <p>
+              <FiThermometer />
+              ტემპერატურა: {weatherData ? Math.round(weatherData.temperature) : "--"}°C
+            </p>
+
+            <p>
+              <FiAlertCircle />
+              რისკი: {weatherData ? weatherData.risk_level : "--"}
+            </p>
+          </div>
         </div>
 
-        <p className="sectionTitle english">ახლომდებარე ქალაქი:</p>
+        <p className="sectionTitle">ახლომდებარე ქალაქი</p>
 
         <div className={nearbyHasDanger ? "nearbyCard danger" : "nearbyCard safe"}>
-          <div className="nearbyIcon"></div>
+          <div className="nearbyIcon">
+            <FiMapPin />
+          </div>
+
           <div>
             <p className="nearbySmall">ბორჯომი</p>
             <h3>
               {nearbyHasDanger
-                  ? "მეზობელ ქალაქში ფიქსირდება საფრთხე"
-                  : "მოსალოდნელი საფრთხე არ არის"}
+                ? "ახლომდებარე ქალაქში ფიქსირდება საფრთხე"
+                : "მოსალოდნელი საფრთხე არ არის"}
             </h3>
           </div>
         </div>
 
         <div className="bottomNav">
-
           <Link to="/home" className="navItem active">
-            <FiHome/>
+            <FiHome />
             <p>მთავარი</p>
           </Link>
 
           <Link to="/profile" className="navItem">
-            <FiUser/>
+            <FiUser />
             <p>პროფილი</p>
           </Link>
 
           <Link to="/advices" className="navItem">
-            <FiShield/>
+            <FiShield />
             <p>რჩევები</p>
           </Link>
 
           <Link to="/more" className="navItem">
-            <FiMoreHorizontal/>
+            <FiMoreHorizontal />
             <p>მეტი</p>
           </Link>
-
         </div>
       </div>
     </div>

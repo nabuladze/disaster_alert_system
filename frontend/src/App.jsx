@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Advices from "./pages/Advices";
 import Notifications from "./pages/Notifications";
+import Profile from "./pages/Profile";
+import More from "./pages/More";
 
 function App() {
   return (
@@ -24,6 +26,10 @@ function App() {
         <Route path="/advices" element={<Advices />} />
 
         <Route path="/notifications" element={<Notifications />} />
+
+        <Route path="/profile" element={<Profile />} />
+
+        <Route path="/more" element={<More />} />
 
       </Routes>
 
