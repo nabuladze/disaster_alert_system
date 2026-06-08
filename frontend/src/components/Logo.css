@@ -1,0 +1,88 @@
+.logoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logoCircle {
+  background: #ffe3ea;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoShieldIcon {
+  color: #ff3347;
+}
+
+.logoText {
+  color: #ff3347;
+  font-weight: 800;
+  margin: 16px 0 0 0;
+}
+
+.logoLine {
+  width: 56px;
+  height: 5px;
+  background: #ff3347;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+/* LARGE */
+
+.logoWrapper.large .logoCircle {
+  width: 116px;
+  height: 116px;
+}
+
+.logoWrapper.large .logoShieldIcon {
+  font-size: 54px;
+}
+
+.logoWrapper.large .logoText {
+  font-size: 40px;
+}
+
+/* MEDIUM */
+
+.logoWrapper.medium .logoCircle {
+  width: 110px;
+  height: 110px;
+}
+
+.logoWrapper.medium .logoShieldIcon {
+  font-size: 52px;
+}
+
+.logoWrapper.medium .logoText {
+  font-size: 30px;
+}
+
+/* SMALL */
+
+.logoWrapper.small .logoCircle {
+  width: 42px;
+  height: 42px;
+}
+
+.logoWrapper.small .logoShieldIcon {
+  font-size: 18px;
+}
+
+.logoWrapper.register {
+  flex-direction: row;
+  gap: 0;
+}
+
+.logoWrapper.register .logoCircle {
+  width: 34px;
+  height: 34px;
+}
+
+.logoWrapper.register .logoShieldIcon {
+  font-size: 16px;
+}
+

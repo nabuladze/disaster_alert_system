@@ -1,3 +1,4 @@
+import Logo from "../components/Logo";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   FiUser,
   FiShield,
   FiMoreHorizontal,
-  FiMapPin,
 } from "react-icons/fi";
 import "./Profile.css";
 
@@ -14,92 +14,73 @@ function Profile() {
   const [user, setUser] = useState(null);
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [message, setMessage] = useState("");
 
   const citiesByRegion = {
-  თბილისი: [{ label: "თბილისი", value: "Tbilisi" }],
-
-  კახეთი: [
-    { label: "თელავი", value: "Telavi" },
-    { label: "გურჯაანი", value: "Gurjaani" },
-    { label: "სიღნაღი", value: "Sighnaghi" },
-    { label: "ყვარელი", value: "Qvareli" },
-    { label: "ლაგოდეხი", value: "Lagodekhi" }
-  ],
-
-  იმერეთი: [
-    { label: "ქუთაისი", value: "Kutaisi" },
-    { label: "ზესტაფონი", value: "Zestaponi" },
-    { label: "სამტრედია", value: "Samtredia" },
-    { label: "ჭიათურა", value: "Chiatura" }
-  ],
-
-  აჭარა: [
-    { label: "ბათუმი", value: "Batumi" },
-    { label: "ქობულეთი", value: "Kobuleti" }
-  ],
-
-  გურია: [
-    { label: "ოზურგეთი", value: "Ozurgeti" },
-    { label: "ლანჩხუთი", value: "Lanchkhuti" },
-    { label: "ჩოხატაური", value: "Chokhatauri" }
-  ],
-
-  სამეგრელო: [
-    { label: "ზუგდიდი", value: "Zugdidi" },
-    { label: "ფოთი", value: "Poti" },
-    { label: "სენაკი", value: "Senaki" }
-  ],
-
-  "სამცხე-ჯავახეთი": [
-    { label: "ახალციხე", value: "Akhaltsikhe" },
-    { label: "ბორჯომი", value: "Borjomi" },
-    { label: "ახალქალაქი", value: "Akhalkalaki" }
-  ],
-
-  სვანეთი: [
-    { label: "მესტია", value: "Mestia" }
-  ],
-
-  ლეჩხუმი: [
-    { label: "ცაგერი", value: "Tsageri" }
-  ],
-
-  აფხაზეთი: [
-    { label: "სოხუმი", value: "Sukhumi" },
-    { label: "გაგრა", value: "Gagra" }
-  ],
-
-  რაჭა: [
-    { label: "ამბროლაური", value: "Ambrolauri" },
-    { label: "ონი", value: "Oni" }
-  ],
-
-  "ქვემო ქართლი": [
-    { label: "რუსთავი", value: "Rustavi" },
-    { label: "მარნეული", value: "Marneuli" },
-    { label: "ბოლნისი", value: "Bolnisi" }
-  ],
-
-  "შიდა ქართლი": [
-    { label: "გორი", value: "Gori" },
-    { label: "ხაშური", value: "Khashuri" },
-    { label: "ქარელი", value: "Kareli" }
-  ],
-
-  "მცხეთა-მთიანეთი": [
-    { label: "მცხეთა", value: "Mtskheta" },
-    { label: "დუშეთი", value: "Dusheti" },
-    { label: "ყაზბეგი", value: "Kazbegi" }
-  ]
-};
+    თბილისი: [{ label: "თბილისი", value: "Tbilisi" }],
+    კახეთი: [
+      { label: "თელავი", value: "Telavi" },
+      { label: "გურჯაანი", value: "Gurjaani" },
+      { label: "სიღნაღი", value: "Sighnaghi" },
+      { label: "ყვარელი", value: "Qvareli" },
+      { label: "ლაგოდეხი", value: "Lagodekhi" },
+    ],
+    იმერეთი: [
+      { label: "ქუთაისი", value: "Kutaisi" },
+      { label: "ზესტაფონი", value: "Zestaponi" },
+      { label: "სამტრედია", value: "Samtredia" },
+      { label: "ჭიათურა", value: "Chiatura" },
+    ],
+    აჭარა: [
+      { label: "ბათუმი", value: "Batumi" },
+      { label: "ქობულეთი", value: "Kobuleti" },
+    ],
+    გურია: [
+      { label: "ოზურგეთი", value: "Ozurgeti" },
+      { label: "ლანჩხუთი", value: "Lanchkhuti" },
+      { label: "ჩოხატაური", value: "Chokhatauri" },
+    ],
+    სამეგრელო: [
+      { label: "ზუგდიდი", value: "Zugdidi" },
+      { label: "ფოთი", value: "Poti" },
+      { label: "სენაკი", value: "Senaki" },
+    ],
+    "სამცხე-ჯავახეთი": [
+      { label: "ახალციხე", value: "Akhaltsikhe" },
+      { label: "ბორჯომი", value: "Borjomi" },
+      { label: "ახალქალაქი", value: "Akhalkalaki" },
+    ],
+    სვანეთი: [{ label: "მესტია", value: "Mestia" }],
+    ლეჩხუმი: [{ label: "ცაგერი", value: "Tsageri" }],
+    აფხაზეთი: [
+      { label: "სოხუმი", value: "Sukhumi" },
+      { label: "გაგრა", value: "Gagra" },
+    ],
+    რაჭა: [
+      { label: "ამბროლაური", value: "Ambrolauri" },
+      { label: "ონი", value: "Oni" },
+    ],
+    "ქვემო ქართლი": [
+      { label: "რუსთავი", value: "Rustavi" },
+      { label: "მარნეული", value: "Marneuli" },
+      { label: "ბოლნისი", value: "Bolnisi" },
+    ],
+    "შიდა ქართლი": [
+      { label: "გორი", value: "Gori" },
+      { label: "ხაშური", value: "Khashuri" },
+      { label: "ქარელი", value: "Kareli" },
+    ],
+    "მცხეთა-მთიანეთი": [
+      { label: "მცხეთა", value: "Mtskheta" },
+      { label: "დუშეთი", value: "Dusheti" },
+      { label: "ყაზბეგი", value: "Kazbegi" },
+    ],
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (!token) {
-      console.log("Token not found");
-      return;
-    }
+    if (!token) return;
 
     axios
       .get("http://127.0.0.1:8000/me", {
@@ -136,10 +117,10 @@ function Profile() {
         }
       );
 
-      alert("მდებარეობა წარმატებით განახლდა");
+      setMessage("პროფილი წარმატებით განახლდა");
     } catch (error) {
       console.log(error);
-      alert("მდებარეობის განახლება ვერ მოხერხდა");
+      setMessage("პროფილის განახლება ვერ მოხერხდა");
     }
   };
 
@@ -150,11 +131,10 @@ function Profile() {
   return (
     <div className="profilePage">
       <div className="profilePhone">
-        <div className="profileLogo">
-          <div className="profileShield"></div>
+        <div className="profileHeader">
+          <Logo size="small" />
+          <h1>GeoAlert</h1>
         </div>
-
-        <h1>GeoAlert</h1>
 
         <div className="profileForm">
           <label>სახელი</label>
@@ -165,6 +145,9 @@ function Profile() {
 
           <label>ტელეფონი</label>
           <input value={user.phone || ""} readOnly />
+
+          <label>დაბადების თარიღი</label>
+          <input value={user.date_of_birth || ""} readOnly />
 
           <label>რეგიონი</label>
           <select
@@ -200,13 +183,10 @@ function Profile() {
               ))}
           </select>
 
-          <button className="mapChooseBtn" type="button">
-            <FiMapPin />
-            რუკაზე არჩევა
-          </button>
+          {message && <p className="profileMessage">{message}</p>}
 
           <button className="saveProfileBtn" onClick={handleSave}>
-            ცვლილებების შენახვა
+            პროფილის შენახვა
           </button>
         </div>
 

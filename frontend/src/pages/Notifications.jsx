@@ -27,46 +27,52 @@ function Notifications() {
     Zugdidi: "ზუგდიდი",
     Poti: "ფოთი",
     Senaki: "სენაკი",
+    Akhalkalaki: "ახალქალაქი",
   };
 
   const getDisasterConfig = (type) => {
-    if (type === "Flood" || type === "წყალდიდობა") {
-      return {
-        title: "წყალდიდობა",
-        icon: <FiDroplet />,
-        circleClass: "blueBg",
-      };
-    }
+    switch (type) {
+      case "Flood":
+      case "წყალდიდობა":
+        return {
+          title: "წყალდიდობა",
+          icon: <FiDroplet />,
+          circleClass: "blueBg",
+        };
 
-    if (type === "Heavy Rain" || type === "ძლიერი ნალექი") {
-      return {
-        title: "ძლიერი ნალექი",
-        icon: <FiCloudRain />,
-        circleClass: "orangeBg",
-      };
-    }
+      case "Heavy Rain":
+      case "ძლიერი ნალექი":
+        return {
+          title: "ძლიერი ნალექი",
+          icon: <FiCloudRain />,
+          circleClass: "orangeBg",
+        };
 
-    if (type === "Strong Wind" || type === "ძლიერი ქარი") {
-      return {
-        title: "ძლიერი ქარი",
-        icon: <FiWind />,
-        circleClass: "darkBlueBg",
-      };
-    }
+      case "Storm":
+      case "Strong Wind":
+      case "ძლიერი ქარი":
+        return {
+          title: "ძლიერი ქარი",
+          icon: <FiWind />,
+          circleClass: "darkBlueBg",
+        };
 
-    if (type === "Heat" || type === "მაღალი ტემპერატურა") {
-      return {
-        title: "მაღალი ტემპერატურა",
-        icon: <FiSun />,
-        circleClass: "heatBg",
-      };
-    }
+      case "Extreme Heat":
+      case "Heat":
+      case "მაღალი ტემპერატურა":
+        return {
+          title: "მაღალი ტემპერატურა",
+          icon: <FiSun />,
+          circleClass: "heatBg",
+        };
 
-    return {
-      title: "საფრთხე არ არის",
-      icon: <FiShield />,
-      circleClass: "safeBg",
-    };
+      default:
+        return {
+          title: "საფრთხე არ არის",
+          icon: <FiShield />,
+          circleClass: "safeBg",
+        };
+    }
   };
 
   const getRiskText = (risk) => {
@@ -91,7 +97,9 @@ function Notifications() {
         const userCity = response.data.city;
         setCity(userCity);
 
-        return axios.get(`http://127.0.0.1:8000/alerts/${userCity}`);
+        return axios.get(
+          `http://127.0.0.1:8000/danger-alerts/${userCity}`
+        );
       })
       .then((response) => {
         setAlerts(response.data);
@@ -122,10 +130,12 @@ function Notifications() {
               <FiBell />
             </div>
 
-            <h2>შეტყობინებები არ მოიძებნა</h2>
+            <h2>შეტყობინებები არ არის</h2>
 
             <p>
-              ამ ქალაქისთვის ამ ეტაპზე საფრთხე არ ფიქსირდება
+              ამ დროისთვის თქვენს ქალაქში
+              <br />
+              აქტიური გაფრთხილებები არ ფიქსირდება.
             </p>
           </div>
         ) : (

@@ -1,3 +1,4 @@
+import Logo from "../components/Logo";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -16,27 +17,29 @@ function More() {
   const [modalType, setModalType] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+const handleLogout = () => {
+  const confirmLogout = window.confirm("ნამდვილად გსურთ ანგარიშიდან გასვლა?");
+
+  if (confirmLogout) {
     localStorage.removeItem("token");
     navigate("/login");
-  };
+  }
+};
 
   return (
-    <div className="morePage">
-      <div className="morePhone">
-        <div className="moreHeader">
-          <div className="moreLogoCircle">
-            <div className="moreLogoShield"></div>
+      <div className="morePage">
+        <div className="morePhone">
+          <div className="moreHeader">
+            <Logo size="small"/>
+            <h1>GeoAlert</h1>
           </div>
-          <h1>GeoAlert</h1>
-        </div>
 
         <h2 className="moreTitle">მეტი</h2>
         <p className="moreSubtitle">სარეგულაციო ინფორმაცია და პარამეტრები</p>
 
         <div className="moreCard" onClick={() => setModalType("about")}>
           <div className="moreIconBox">
-            <FiInfo />
+            <FiInfo/>
           </div>
 
           <div className="moreCardText">
@@ -44,12 +47,12 @@ function More() {
             <p>ინფორმაცია GeoAlert-ის მიზნისა და ფუნქციების შესახებ</p>
           </div>
 
-          <FiChevronRight className="arrowIcon" />
+          <FiChevronRight className="arrowIcon"/>
         </div>
 
         <div className="moreCard" onClick={() => setModalType("numbers")}>
           <div className="moreIconBox">
-            <FiPhone />
+            <FiPhone/>
           </div>
 
           <div className="moreCardText">
@@ -57,12 +60,12 @@ function More() {
             <p>საჭირო საკონტაქტო ნომრები საგანგებო შემთხვევებისთვის</p>
           </div>
 
-          <FiChevronRight className="arrowIcon" />
+          <FiChevronRight className="arrowIcon"/>
         </div>
 
         <div className="moreCard" onClick={handleLogout}>
           <div className="moreIconBox">
-            <FiLogOut />
+            <FiLogOut/>
           </div>
 
           <div className="moreCardText">
@@ -70,34 +73,31 @@ function More() {
             <p>ანგარიშიდან გასვლა</p>
           </div>
 
-          <FiChevronRight className="arrowIcon" />
+          <FiChevronRight className="arrowIcon"/>
         </div>
 
         <div className="versionBox">
-          <div className="versionLogoCircle">
-            <div className="versionLogoShield"></div>
-          </div>
-          <h3>GeoAlert</h3>
+          <Logo size="large" />
           <p>ვერსია 1.0.0</p>
         </div>
 
         {modalType && (
-          <div className="moreModalOverlay">
-            <div className="moreModal">
-              <h2>
-                {modalType === "about"
-                  ? "აპლიკაციის შესახებ"
-                  : "საგანგებო ნომრები"}
-              </h2>
+            <div className="moreModalOverlay">
+              <div className="moreModal">
+                <h2>
+                  {modalType === "about"
+                      ? "აპლიკაციის შესახებ"
+                      : "საგანგებო ნომრები"}
+                </h2>
 
-              {modalType === "about" ? (
-                <p>
-                  GeoAlert არის ბუნებრივი კატასტროფების ადრეული გაფრთხილების
-                  სისტემა, რომელიც მომხმარებლებს აწვდის ინფორმაციას ამინდისა
-                  და შესაძლო საფრთხეების შესახებ მათი მდებარეობის მიხედვით.
-                </p>
-              ) : (
-                  <div className="numbersList">
+                {modalType === "about" ? (
+                    <p>
+                      GeoAlert არის ბუნებრივი კატასტროფების ადრეული გაფრთხილების
+                      სისტემა, რომელიც მომხმარებლებს აწვდის ინფორმაციას ამინდისა
+                      და შესაძლო საფრთხეების შესახებ მათი მდებარეობის მიხედვით.
+                    </p>
+                ) : (
+                    <div className="numbersList">
                       <p><strong>112</strong> — ერთიანი საგანგებო სამსახური</p>
 
                       <p><strong>113</strong> — სასწრაფო სამედიცინო დახმარება</p>
@@ -109,38 +109,39 @@ function More() {
                       <p><strong>122</strong> — საპატრულო პოლიცია</p>
 
                       <p><strong>125</strong> — დაცვის პოლიცია</p>
-                  </div>
-              )}
+                    </div>
+                )}
 
                 <button onClick={() => setModalType(null)}>დახურვა</button>
+              </div>
             </div>
-          </div>
         )}
 
-          <div className="bottomNav">
-              <Link to="/home" className="navItem">
-                  <FiHome/>
-                  <p>მთავარი</p>
-              </Link>
+        <div className="bottomNav">
+          <Link to="/home" className="navItem">
+            <FiHome/>
+            <p>მთავარი</p>
+          </Link>
 
-              <Link to="/profile" className="navItem">
-                  <FiUser/>
-                  <p>პროფილი</p>
+          <Link to="/profile" className="navItem">
+            <FiUser/>
+            <p>პროფილი</p>
           </Link>
 
           <Link to="/advices" className="navItem">
-            <FiShield />
+            <FiShield/>
             <p>რჩევები</p>
           </Link>
 
           <Link to="/more" className="navItem active">
-            <FiMoreHorizontal />
+            <FiMoreHorizontal/>
             <p>მეტი</p>
           </Link>
         </div>
       </div>
-    </div>
-  );
+</div>
+)
+  ;
 }
 
 export default More;

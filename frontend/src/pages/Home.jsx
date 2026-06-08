@@ -1,3 +1,4 @@
+import Logo from "../components/Logo";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Home.css";
@@ -33,7 +34,30 @@ function Home() {
     Poti: "ფოთი",
     Senaki: "სენაკი",
     Borjomi: "ბორჯომი",
+    Akhalkalaki: "ახალქალაქი",
   };
+
+  const weatherTranslations = {
+  "clear sky": "მოწმენდილი ცა",
+  "few clouds": "ნაწილობრივ ღრუბლიანი",
+  "scattered clouds": "ღრუბლიანი",
+  "broken clouds": "მეტწილად ღრუბლიანი",
+  "overcast clouds": "მოღრუბლული",
+  "light rain": "მსუბუქი წვიმა",
+  "moderate rain": "ზომიერი წვიმა",
+  "heavy rain": "ძლიერი წვიმა",
+  "very heavy rain": "ძალიან ძლიერი წვიმა",
+  "thunderstorm": "ქუხილი",
+  "mist": "ნისლი",
+  "fog": "ნისლი",
+  "snow": "თოვლი"
+};
+
+  const riskTranslations = {
+  Low: "დაბალი",
+  Medium: "საშუალო",
+  High: "მაღალი",
+};
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -83,12 +107,12 @@ function Home() {
       <div className="homePhone">
         <div className="topBar">
           <div className="logoRow">
-            <div className="logoDot"></div>
+            <Logo size="small"/>
             <h2>GeoAlert</h2>
           </div>
 
           <Link to="/notifications" className="bellButton">
-            <FiBell />
+            <FiBell/>
           </Link>
         </div>
 
@@ -138,7 +162,11 @@ function Home() {
 
             <div>
               <h2>{weatherData ? Math.round(weatherData.temperature) : "--"}°C</h2>
-              <p>{weatherData ? weatherData.weather : "იტვირთება..."}</p>
+              <p>
+                {weatherData
+                    ? weatherTranslations[weatherData.weather] || weatherData.weather
+                    : "იტვირთება..."}
+              </p>
             </div>
           </div>
 
@@ -155,7 +183,9 @@ function Home() {
 
             <p>
               <FiAlertCircle />
-              რისკი: {weatherData ? weatherData.risk_level : "--"}
+              რისკი: {weatherData
+                ? riskTranslations[weatherData.risk_level] || weatherData.risk_level
+                : "--"}
             </p>
           </div>
         </div>

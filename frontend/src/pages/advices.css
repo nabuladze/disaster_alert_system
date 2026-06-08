@@ -19,27 +19,27 @@
   gap: 12px;
 }
 
-.smallLogoCircle {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #ffdce5;
+.advicesHeader .logoWrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-.smallLogoShield {
-  width: 16px;
-  height: 16px;
-  background: #ff3347;
-  border-radius: 50%;
+.advicesHeader .logoCircle {
+  width: 42px !important;
+  height: 42px !important;
 }
+
+.advicesHeader .logoShieldIcon {
+  font-size: 20px !important;
+}
+
 
 .advicesHeader h1 {
   color: #ff3347;
-  margin: 0;
-  font-size: 34px;
+  font-size: 28px;
+  font-weight: 800;
+  margin: -28px 0 0 0;
+  line-height: 1;
 }
 
 .pageTitle {
@@ -167,7 +167,7 @@
 .adviceModalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;

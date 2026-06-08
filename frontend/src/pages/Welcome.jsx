@@ -1,16 +1,16 @@
 import "./Welcome.css";
 import { Link } from "react-router-dom";
+import Logo from "../components/Logo";
 
 function Welcome() {
   return (
     <div className="page">
       <div className="phone">
 
-        <div className="logoCircle">
-          <div className="shield"></div>
+        <div className="welcomeLogoSection">
+          <Logo size="large"/>
+          <h1 className="welcomeTitle">GeoAlert</h1>
         </div>
-
-        <h1>GeoAlert</h1>
 
         <div className="line"></div>
 

@@ -26,17 +26,11 @@
   gap: 8px;
 }
 
-.logoDot {
-  width: 16px;
-  height: 16px;
-  background: #ff3347;
-  border-radius: 50%;
-}
-
 .logoRow h2 {
   color: #ff3347;
   margin: 0;
-  font-size: 20px;
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .bellButton {
@@ -308,4 +302,37 @@
 
 .navItem.active {
   color: #ff3347;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoRow .logoWrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.logoRow .logoCircle {
+  width: 42px !important;
+  height: 42px !important;
+  margin: 0 !important;
+}
+
+.logoRow .logoShieldIcon {
+  font-size: 20px !important;
+}
+
+.logoRow h2 {
+  margin: 0 !important;
+  line-height: 1 !important;
 }

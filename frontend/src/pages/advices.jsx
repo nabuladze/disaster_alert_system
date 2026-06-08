@@ -1,3 +1,4 @@
+import Logo from "../components/Logo";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -22,17 +23,15 @@ function Advices() {
     <div className="advicesPage">
       <div className="advicesPhone">
         <div className="advicesHeader">
-          <div className="smallLogoCircle">
-            <div className="smallLogoShield"></div>
-          </div>
+          <Logo size="small" />
           <h1>GeoAlert</h1>
         </div>
 
         <h2 className="pageTitle">უსაფრთხოების რჩევები</h2>
 
         <p className="pageDescription">
-          მზადყოფნა გადამწყვეტია, გაეცანით რეკომენდაციებს ბუნებრივი კატასტროფების დროს
-          თქვენი და თქვენი ახლობლების უსაფრთხოებისთვის.
+          მზადყოფნა გადამწყვეტია, გაეცანით რეკომენდაციებს ბუნებრივი
+          კატასტროფების დროს თქვენი და თქვენი ახლობლების უსაფრთხოებისთვის.
         </p>
 
         <div className="adviceCard">
@@ -96,12 +95,12 @@ function Advices() {
         </div>
 
         <div className="greenButtons">
-          <button onClick={() => setModalType("firstAid")}>
+          <button type="button" onClick={() => setModalType("firstAid")}>
             <FiPlusSquare />
             პირველადი დახმარება
           </button>
 
-          <button onClick={() => setModalType("evacuation")}>
+          <button type="button" onClick={() => setModalType("evacuation")}>
             <FiMap />
             საევაკუაციო
           </button>
@@ -138,7 +137,11 @@ function Advices() {
                 />
               )}
 
-              <button className="closeModal" onClick={() => setModalType(null)}>
+              <button
+                type="button"
+                className="closeModal"
+                onClick={() => setModalType(null)}
+              >
                 დახურვა
               </button>
             </div>

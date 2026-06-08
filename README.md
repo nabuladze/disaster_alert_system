@@ -1,44 +1,251 @@
-# Natural Disaster Early Warning System
+# ბუნებრივი კატასტროფების ადრეული გაფრთხილების სისტემა
 
-Bachelor's project for Caucasus University.
+საბაკალავრო პროექტი - კავკასიის უნივერსიტეტი
 
-This project is a web-based early warning system for natural disasters. It provides users with location-based alerts using weather data and rule-based risk analysis.
+## პროექტის აღწერა
 
-## Technologies
+ბუნებრივი კატასტროფების ადრეული გაფრთხილების სისტემა წარმოადგენს ვებ-აპლიკაციას, რომელიც მომხმარებლებს აწვდის დროულ შეტყობინებებსა და უსაფრთხოების რეკომენდაციებს მათი არჩეული მდებარეობის საფუძველზე.
 
-- Frontend: HTML5, CSS3, JavaScript ES6+
-- Backend: Python 3.10+, FastAPI, Uvicorn
-- Database: SQLite
-- External API: OpenWeather API
-- Tools: GitHub, PyCharm, Postman
+სისტემა რეალურ დროში იღებს ამინდის მონაცემებს OpenWeather API-დან, ახდენს ამ მონაცემების ანალიზს წინასწარ განსაზღვრული წესების მიხედვით და განსაზღვრავს მოსალოდნელ რისკებს.
 
-## Main Features
+მომხმარებლებს შეუძლიათ რეგისტრაცია, ავტორიზაცია, რეგიონისა და ქალაქის არჩევა, შეტყობინებების მიღება და სხვადასხვა ტიპის ბუნებრივი კატასტროფისთვის განკუთვნილი უსაფრთხოების რეკომენდაციების გაცნობა.
 
-- User registration and authorization
-- Region/location selection
-- Weather data retrieval from external API
-- Rule-based disaster risk detection
-- Automatic alert generation
-- Safety recommendations
-- Dashboard for active warnings
+---
 
-## Project Structure
+# გამოყენებული ტექნოლოგიები
+
+## Frontend
+
+* React.js
+* React Router
+* Axios
+* CSS3
+* React Icons
+* Vite
+
+## Backend
+
+* Python 3.10+
+* FastAPI
+* SQLAlchemy
+* Uvicorn
+* JWT Authentication
+* Passlib
+
+## მონაცემთა ბაზა
+
+* SQLite
+
+## გარე სერვისები
+
+* OpenWeather API
+
+## გამოყენებული ხელსაწყოები
+
+* GitHub
+* PyCharm
+* Postman
+* Swagger UI
+
+---
+
+# ძირითადი ფუნქციონალი
+
+## მომხმარებლის მართვა
+
+* რეგისტრაცია
+* ავტორიზაცია
+* JWT ავტორიზაცია
+* პროფილის ინფორმაციის ჩვენება
+* მომხმარებლის მდებარეობის განახლება
+
+## მდებარეობის მართვა
+
+* რეგიონის არჩევა
+* ქალაქის არჩევა
+* ქალაქის მიხედვით ამინდის მონიტორინგი
+
+## ამინდის მონიტორინგი
+
+* რეალურ დროში ამინდის მონაცემების მიღება
+* მიმდინარე ამინდის ჩვენება
+* ამინდის პირობების ანალიზი
+
+## კატასტროფების აღმოჩენა
+
+სისტემა ამჟამად განსაზღვრავს:
+
+* წყალდიდობას
+* ძლიერ ნალექს
+* ძლიერ ქარს
+* მაღალ ტემპერატურას
+
+## შეტყობინებების სისტემა
+
+* გაფრთხილებების ავტომატური გენერირება
+* აქტიური გაფრთხილებები
+* ქალაქის მიხედვით გაფრთხილებები
+* საფრთხის შემცველი გაფრთხილებების გაფილტვრა
+* გაფრთხილებების ისტორია
+
+## რეკომენდაციები
+
+სისტემა მომხმარებლებს სთავაზობს რეკომენდაციებს შემდეგი შემთხვევებისთვის:
+
+* წყალდიდობა
+* ძლიერი ნალექი
+* ძლიერი ქარი
+* მაღალი ტემპერატურა
+
+---
+
+# კატასტროფების ტიპები
+
+### წყალდიდობა
+
+მაღალი რისკის შემცველი მოვლენა, რომელიც გამოწვეულია ძლიერი ნალექით და წყლის დონის მატებით.
+
+### ძლიერი ნალექი
+
+საშუალო რისკის შემცველი მოვლენა, რომელიც გამოწვეულია ხანგრძლივი ან ინტენსიური წვიმით.
+
+### ძლიერი ქარი
+
+მაღალი რისკის შემცველი მოვლენა, რომელიც გამოწვეულია ძლიერი ქარის ნაკადებით.
+
+### მაღალი ტემპერატურა
+
+საშუალო რისკის შემცველი მოვლენა, რომელიც გამოწვეულია ჰაერის ძალიან მაღალი ტემპერატურით.
+
+---
+
+# პროექტის სტრუქტურა
 
 ```text
 disaster_alert_system/
+│
 ├── backend/
 │   ├── app/
-│   │   ├── Models/
-│   │   ├── Routes/
-│   │   ├── Schemas/
-│   │   ├── Services/
+│   │   ├── auth.py
 │   │   ├── database.py
-│   │   └── main.py
-│   └── requirements.txt
+│   │   ├── jwt_handler.py
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   ├── risk_engine.py
+│   │   ├── schemas.py
+│   │   └── weather.py
+│   │
+│   ├── db/
+│   │   └── app.db
+│   │
+│   ├── requirements.txt
+│   └── .env
+│
+├── frontend/
+│   ├── public/
+│   │
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   │   ├── Welcome.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── Notifications.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   ├── More.jsx
+│   │   │   └── Advices.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   ├── App.css
+│   │   └── index.css
+│   │
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+│
 ├── .gitignore
 └── README.md
-
 ```
-## Developers
-- Nino Zaridze
-- Nini Abuladze
+
+---
+
+# ინსტალაცია
+
+## Backend-ის გაშვება
+
+გადადით backend საქაღალდეში:
+
+```bash
+cd backend
+```
+
+დააინსტალირეთ საჭირო ბიბლიოთეკები:
+
+```bash
+pip install -r requirements.txt
+```
+
+შექმენით `.env` ფაილი და ჩაწერეთ:
+
+```env
+OPENWEATHER_API_KEY=YOUR_API_KEY
+```
+
+გაუშვით სერვერი:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Backend ხელმისაწვდომი იქნება მისამართზე:
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger დოკუმენტაცია:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## Frontend-ის გაშვება
+
+გადადით frontend საქაღალდეში:
+
+```bash
+cd frontend
+```
+
+დააინსტალირეთ დამოკიდებულებები:
+
+```bash
+npm install
+```
+
+გაუშვით პროექტი:
+
+```bash
+npm run dev
+```
+
+Frontend ხელმისაწვდომი იქნება მისამართზე:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# ავტორები
+
+- ნინი აბულაძე
+- ნინო ზარიძე
+
+კავკასიის უნივერსიტეტი
+საბაკალავრო პროექტი

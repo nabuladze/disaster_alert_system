@@ -1,3 +1,4 @@
+import Logo from "../components/Logo";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -37,12 +38,9 @@ function Login() {
     return (
   <div className="loginPage">
     <div className="loginPhone">
-      <div className="logoCircle">
-        <div className="shield"></div>
-      </div>
+      <Logo size="medium" />
 
       <h1>GeoAlert</h1>
-      <div className="line"></div>
 
       <form className="loginForm" onSubmit={handleLogin}>
         <label>ტელეფონი</label>

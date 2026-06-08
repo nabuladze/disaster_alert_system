@@ -13,29 +13,28 @@
   position: relative;
 }
 
-.profileLogo {
-  width: 58px;
-  height: 58px;
-  background: #ffdce5;
-  border-radius: 50%;
+.profileHeader {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  gap: 10px;
   margin-bottom: 28px;
 }
 
-.profileShield {
-  width: 22px;
-  height: 24px;
-  background: #ff3347;
-  border-radius: 50% 50% 60% 60%;
+.profileHeader .logoCircle {
+  width: 42px !important;
+  height: 42px !important;
 }
 
-.profilePhone h1 {
+.profileHeader .logoShieldIcon {
+  font-size: 20px !important;
+}
+
+.profileHeader h1 {
   color: #ff3347;
-  font-size: 36px;
-  margin-bottom: 28px;
-  text-align: left;
+  font-size: 28px;
+  font-weight: 800;
+  margin: 6px 0 0 0;
+  line-height: 1;
 }
 
 .profileForm {
@@ -66,24 +65,12 @@
   background: #fafafa;
 }
 
-.mapChooseBtn {
-  width: 160px;
-  height: 44px;
-  align-self: flex-end;
-  background: white;
-  border: 1px solid #2eb872;
+.profileMessage {
   color: #2eb872;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-top: 8px;
-  margin-bottom: 22px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 14px;
+  text-align: center;
 }
 
 .saveProfileBtn {
@@ -95,6 +82,7 @@
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 4px;
 }
 
 .bottomNav {
