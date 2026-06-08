@@ -3,18 +3,18 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from app.jwt_handler import create_access_token, verify_token
 from app.auth import verify_password
-from app.weather import get_weather, get_weather_by_coordinates
-from app.risk_engine import analyze_risk
+from app.weather import get_weather
 from fastapi.middleware.cors import CORSMiddleware
 
 # ჩვენი ფაილები
 from app.database import engine, get_db
 from app.models import Base, User, Alert
-from app.schemas import UserCreate, UserLogin
+from app.schemas import UserCreate, UserLogin, LocationUpdate
 from app.auth import hash_password
 
 # FastAPI აპლიკაციის შექმნა
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -25,6 +25,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 security = HTTPBearer()
 
 # ცხრილების ავტომატური შექმნა DB-ში
@@ -62,9 +63,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         password=hashed_pw,
         region=user.region,
         city=user.city,
-        latitude=user.latitude,
-        longitude=user.longitude,
-        accepted_terms = user.accepted_terms
+        accepted_terms=user.accepted_terms
     )
 
     db.add(new_user)
@@ -101,6 +100,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 def weather(city: str):
     return get_weather(city)
 
+
 # create fixed test alert, used only for development/demo
 @app.post("/create-alert")
 def create_alert(db: Session = Depends(get_db)):
@@ -118,6 +118,39 @@ def create_alert(db: Session = Depends(get_db)):
     return {
         "message": "Alert saved successfully",
         "alert_id": new_alert.id
+    }
+
+
+# generate alert for users from selected city
+@app.post("/generate-alert-for-city/{city}")
+def generate_alert_for_city(city: str, db: Session = Depends(get_db)):
+    users = db.query(User).filter(User.city == city).all()
+
+    if not users:
+        return {"error": "No users found in this city"}
+
+    weather_data = get_weather(city)
+
+    if "error" in weather_data:
+        return weather_data
+
+    new_alert = Alert(
+        city=city,
+        risk_level=weather_data["risk_level"],
+        disaster_type=weather_data["disaster_type"],
+        recommendation=weather_data["recommendation"]
+    )
+
+    db.add(new_alert)
+    db.commit()
+    db.refresh(new_alert)
+
+    return {
+        "message": "Alert generated for city users",
+        "city": city,
+        "affected_users": len(users),
+        "alert_id": new_alert.id,
+        "weather": weather_data
     }
 
 
@@ -159,9 +192,9 @@ def get_danger_alerts_by_city(city: str, db: Session = Depends(get_db)):
 
     return alerts
 
+
 @app.delete("/delete-alert/{alert_id}")
 def delete_alert(alert_id: int, db: Session = Depends(get_db)):
-
     alert = db.query(Alert).filter(Alert.id == alert_id).first()
 
     if not alert:
@@ -174,11 +207,13 @@ def delete_alert(alert_id: int, db: Session = Depends(get_db)):
         "message": "Alert deleted successfully"
     }
 
+
 @app.get("/users")
 def get_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
 
     return users
+
 
 @app.get("/users/{region}")
 def get_users_by_region(region: str, db: Session = Depends(get_db)):
@@ -186,41 +221,6 @@ def get_users_by_region(region: str, db: Session = Depends(get_db)):
 
     return users
 
-@app.post("/generate-alert-for-city/{city}")
-def generate_alert_for_city(city: str, db: Session = Depends(get_db)):
-    users = db.query(User).filter(User.city == city).all()
-
-    if not users:
-        return {"error": "No users found in this city"}
-
-    first_user = users[0]
-
-    weather_data = get_weather_by_coordinates(
-        first_user.latitude,
-        first_user.longitude
-    )
-
-    if "error" in weather_data:
-        return weather_data
-
-    new_alert = Alert(
-        city=first_user.city,
-        risk_level=weather_data["risk_level"],
-        disaster_type=weather_data["disaster_type"],
-        recommendation=weather_data["recommendation"]
-    )
-
-    db.add(new_alert)
-    db.commit()
-    db.refresh(new_alert)
-
-    return {
-        "message": "Alert generated for city users",
-        "city": first_user.city,
-        "affected_users": len(users),
-        "alert_id": new_alert.id,
-        "weather": weather_data
-    }
 
 @app.get("/active-alerts")
 def get_active_alerts(db: Session = Depends(get_db)):
@@ -238,7 +238,6 @@ def get_active_alerts(db: Session = Depends(get_db)):
 def protected_route(
     credentials: HTTPAuthorizationCredentials = Security(security)
 ):
-
     token = credentials.credentials
 
     payload = verify_token(token)
@@ -250,6 +249,7 @@ def protected_route(
         "message": "Protected route accessed successfully",
         "user_data": payload
     }
+
 
 @app.get("/me")
 def get_me(
@@ -274,17 +274,17 @@ def get_me(
         "first_name": user.first_name,
         "last_name": user.last_name,
         "phone": user.phone,
+        "date_of_birth": user.date_of_birth,
         "region": user.region,
-        "city": user.city,
-        "latitude": user.latitude,
-        "longitude": user.longitude
+        "city": user.city
     }
 
-@app.put("/me/region")
-def update_my_region(
-        new_region: str,
-        credentials: HTTPAuthorizationCredentials = Security(security),
-        db: Session = Depends(get_db)
+
+@app.put("/me/location")
+def update_my_location(
+    location: LocationUpdate,
+    credentials: HTTPAuthorizationCredentials = Security(security),
+    db: Session = Depends(get_db)
 ):
     token = credentials.credentials
     payload = verify_token(token)
@@ -299,13 +299,15 @@ def update_my_region(
     if not user:
         return {"error": "User not found"}
 
-    user.region = new_region
+    user.region = location.region
+    user.city = location.city
 
     db.commit()
     db.refresh(user)
 
-    return{
-        "message": "Your region updated successfully",
+    return {
+        "message": "Location updated successfully",
         "user_id": user.id,
-        "new_region": user.region
+        "region": user.region,
+        "city": user.city
     }

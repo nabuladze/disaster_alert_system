@@ -35,18 +35,3 @@ def get_weather(city: str):
 
     data = response.json()
     return build_weather_response(data)
-
-
-def get_weather_by_coordinates(latitude: float, longitude: float):
-    url = (
-        f"https://api.openweathermap.org/data/2.5/weather"
-        f"?lat={latitude}&lon={longitude}&appid={API_KEY}&units=metric"
-    )
-
-    response = requests.get(url)
-
-    if response.status_code != 200:
-        return {"error": "Could not fetch weather data"}
-
-    data = response.json()
-    return build_weather_response(data)

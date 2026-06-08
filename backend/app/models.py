@@ -23,9 +23,6 @@ class User(Base):
     region = Column(String)
     city = Column(String)
 
-    latitude = Column(Float, nullable=True)
-    longitude = Column(Float, nullable=True)
-
     accepted_terms = Column(Boolean, default=False)
 
 class Alert(Base):

@@ -6,15 +6,15 @@ def analyze_risk(weather_data):
     # default values
     risk_level = "Low"
     disaster_type = "No danger"
-    recommendation = "Weather conditions are safe."
+    recommendation = "უსაფრთხო ამინდია."
 
     # flood risk
     if "heavy rain" in weather_description or "heavy intensity rain" in weather_description or "very heavy rain" in weather_description:
         risk_level = "High"
         disaster_type = "Flood"
         recommendation = (
-            "Avoid rivers and low areas. "
-            "Follow local emergency instructions."
+            "მოერიდეთ მდინარეებს."
+            "მიჰყევით საგანგებო სამსახურის მითითებებს"
         )
 
     # heavy rain risk
@@ -22,7 +22,7 @@ def analyze_risk(weather_data):
         risk_level = "Medium"
         disaster_type = "Heavy Rain"
         recommendation = (
-            "Be careful when travelling and avoid flooded roads."
+            "ფრთხილად იმოძრავეთ და მოერიდეთ დატბორილ გზებს."
         )
 
     # storm risk
@@ -30,7 +30,7 @@ def analyze_risk(weather_data):
         risk_level = "High"
         disaster_type = "Storm"
         recommendation = (
-            "Stay indoors and avoid unnecessary travel."
+            "დარჩით შენობაში და მოერიდეთ სახლიდან გასვლას."
         )
 
     # extreme heat risk
@@ -38,7 +38,7 @@ def analyze_risk(weather_data):
         risk_level = "Medium"
         disaster_type = "Extreme Heat"
         recommendation = (
-            "Drink water and avoid direct sunlight."
+            "დალიეთ წყალი და მოერიდეთ მზის პირდაპირ სხივებს."
         )
 
     return {

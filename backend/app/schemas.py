@@ -13,8 +13,6 @@ class UserCreate(BaseModel):
     password: str
     region: str
     city: str
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
     accepted_terms: bool
 
     #ქართული ტელეფონის ნომრის ვალიდაცია
@@ -34,3 +32,7 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     phone: str
     password: str
+
+class LocationUpdate(BaseModel):
+    region: str
+    city: str
