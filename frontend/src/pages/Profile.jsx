@@ -9,13 +9,17 @@ import {
   FiMoreHorizontal,
 } from "react-icons/fi";
 import "./Profile.css";
-
+// მომხმარებლის პროფილის გვერდი
 function Profile() {
+  // მომხმარებლის მონაცემების state
   const [user, setUser] = useState(null);
+  // არჩეული რეგიონისა და ქალაქის state-ები
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  // შეტყობინება წარმატების ან შეცდომის შესახებ
   const [message, setMessage] = useState("");
 
+  // რეგიონებისა და ქალაქების სია
   const citiesByRegion = {
     თბილისი: [{ label: "თბილისი", value: "Tbilisi" }],
     კახეთი: [
@@ -76,7 +80,8 @@ function Profile() {
       { label: "ყაზბეგი", value: "Kazbegi" },
     ],
   };
-
+  // გვერდის ჩატვირთვისას ხდება
+  // მომხმარებლის ინფორმაციის წამოღება Backend-იდან
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -89,7 +94,9 @@ function Profile() {
         },
       })
       .then((response) => {
+        // მომხმარებლის მონაცემების შენახვა state-ში
         setUser(response.data);
+        // მიმდინარე რეგიონისა და ქალაქის ჩატვირთვა
         setSelectedRegion(response.data.region || "");
         setSelectedCity(response.data.city || "");
       })
@@ -98,6 +105,7 @@ function Profile() {
       });
   }, []);
 
+   // მომხმარებლის ახალი მდებარეობის შენახვა
   const handleSave = async () => {
     const token = localStorage.getItem("token");
 
@@ -116,14 +124,15 @@ function Profile() {
           },
         }
       );
-
+      // წარმატებული განახლების შეტყობინება
       setMessage("პროფილი წარმატებით განახლდა");
     } catch (error) {
       console.log(error);
+      // შეცდომის შეტყობინება
       setMessage("პროფილის განახლება ვერ მოხერხდა");
     }
   };
-
+  // სანამ მონაცემები ჩაიტვირთება
   if (!user) {
     return <p>იტვირთება...</p>;
   }
@@ -131,12 +140,14 @@ function Profile() {
   return (
     <div className="profilePage">
       <div className="profilePhone">
+        {/* გვერდის სათაური */}
         <div className="profileHeader">
           <Logo size="small" />
           <h1>GeoAlert</h1>
         </div>
 
         <div className="profileForm">
+          {/* მომხმარებლის პერსონალური მონაცემები */}
           <label>სახელი</label>
           <input value={user.first_name || ""} readOnly />
 
@@ -148,11 +159,12 @@ function Profile() {
 
           <label>დაბადების თარიღი</label>
           <input value={user.date_of_birth || ""} readOnly />
-
+          {/* რეგიონის არჩევა */}
           <label>რეგიონი</label>
           <select
             value={selectedRegion}
             onChange={(e) => {
+              // რეგიონის შეცვლისას ქალაქი ნულდება
               setSelectedRegion(e.target.value);
               setSelectedCity("");
             }}
@@ -165,7 +177,7 @@ function Profile() {
               </option>
             ))}
           </select>
-
+          {/* ქალაქის არჩევა */}
           <label>ქალაქი / მუნიციპალიტეტი</label>
           <select
             value={selectedCity}
@@ -182,14 +194,15 @@ function Profile() {
                 </option>
               ))}
           </select>
-
+          {/* წარმატების ან შეცდომის შეტყობინება */}
           {message && <p className="profileMessage">{message}</p>}
 
+          {/* პროფილის შენახვის ღილაკი */}
           <button className="saveProfileBtn" onClick={handleSave}>
             პროფილის შენახვა
           </button>
         </div>
-
+        {/* ქვედა ნავიგაცია */}
         <div className="bottomNav">
           <Link to="/home" className="navItem">
             <FiHome />

@@ -16,7 +16,10 @@ import {
 } from "react-icons/fi";
 import "./Advices.css";
 
+// უსაფრთხოების რეკომენდაციების გვერდი
 function Advices() {
+
+  // modal-ის ტიპის შესანახი state
   const [modalType, setModalType] = useState(null);
 
   return (
@@ -29,11 +32,13 @@ function Advices() {
 
         <h2 className="pageTitle">უსაფრთხოების რჩევები</h2>
 
+        {/*გვერდის აღწერა*/}
         <p className="pageDescription">
           მზადყოფნა გადამწყვეტია, გაეცანით რეკომენდაციებს ბუნებრივი
           კატასტროფების დროს თქვენი და თქვენი ახლობლების უსაფრთხოებისთვის.
         </p>
 
+        {/*წყალდიდობის დროს უსაფრთხოების რეკომენდაციები*/}
         <div className="adviceCard">
           <div className="iconCircle blueBg">
             <FiDroplet className="cardIcon blue" />
@@ -49,6 +54,7 @@ function Advices() {
           />
         </div>
 
+        {/*ძლიერი ნალექის დროს უსაფრთხოების რეკომენდაციები*/}
         <div className="adviceCard">
           <div className="iconCircle orangeBg">
             <FiCloudRain className="cardIcon orange" />
@@ -64,6 +70,7 @@ function Advices() {
           />
         </div>
 
+        {/*ძლიერი ქარის დროს უსაფრთხოების რეკომენდაციები*/}
         <div className="adviceCard">
           <div className="iconCircle darkBlueBg">
             <FiWind className="cardIcon darkBlue" />
@@ -79,6 +86,7 @@ function Advices() {
           />
         </div>
 
+        {/*მაღალი ტემპერატურის დროს უსაფრთხოების რეკომენდაციები*/}
         <div className="adviceCard">
           <div className="iconCircle heatBg">
             <FiSun className="cardIcon heat" />
@@ -94,6 +102,7 @@ function Advices() {
           />
         </div>
 
+        {/*დამატებითი ინფორმაციის ღილაკები*/}
         <div className="greenButtons">
           <button type="button" onClick={() => setModalType("firstAid")}>
             <FiPlusSquare />
@@ -106,6 +115,7 @@ function Advices() {
           </button>
         </div>
 
+        {/* ინფორმაციული modal ფანჯარა */}
         {modalType && (
           <div className="adviceModalOverlay">
             <div className="adviceModal">
@@ -148,6 +158,7 @@ function Advices() {
           </div>
         )}
 
+        {/* ქვედა ნავიგაციის მენიუ */}
         <div className="bottomNav">
           <Link to="/home" className="navItem">
             <FiHome />
@@ -174,6 +185,8 @@ function Advices() {
   );
 }
 
+
+// უნივერსალური კომპონენტი რეკომენდაციების სიის გამოსატანად
 function AdviceList({ items }) {
   return (
     <ul className="adviceList">

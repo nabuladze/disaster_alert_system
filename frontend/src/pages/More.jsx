@@ -13,30 +13,38 @@ import {
 } from "react-icons/fi";
 import "./More.css";
 
+// დამატებითი ინფორმაციისა და პარამეტრების გვერდი
 function More() {
+  // modal-ის ტიპი (about ან numbers)
   const [modalType, setModalType] = useState(null);
   const navigate = useNavigate();
 
-const handleLogout = () => {
-  const confirmLogout = window.confirm("ნამდვილად გსურთ ანგარიშიდან გასვლა?");
+  // ანგარიშიდან გამოსვლის ფუნქცია
+  const handleLogout = () => {
+    // მომხმარებლის დადასტურების მოთხოვნა
+    const confirmLogout = window.confirm("ნამდვილად გსურთ ანგარიშიდან გასვლა?");
 
-  if (confirmLogout) {
-    localStorage.removeItem("token");
-    navigate("/login");
-  }
-};
+    if (confirmLogout) {
+      // JWT token-ის წაშლა ბრაუზერის მეხსიერებიდან
+      localStorage.removeItem("token");
+      // დაბრუნება Login გვერდზე
+      navigate("/login");
+    }
+  };
 
   return (
       <div className="morePage">
         <div className="morePhone">
-          <div className="moreHeader">
+          <div className="moreHeader"> {/* აპლიკაციის სათაური */}
             <Logo size="small"/>
             <h1>GeoAlert</h1>
           </div>
 
+        {/* გვერდის სათაური */}
         <h2 className="moreTitle">მეტი</h2>
         <p className="moreSubtitle">სარეგულაციო ინფორმაცია და პარამეტრები</p>
 
+        {/* აპლიკაციის შესახებ ინფორმაციის გახსნა */}
         <div className="moreCard" onClick={() => setModalType("about")}>
           <div className="moreIconBox">
             <FiInfo/>
@@ -49,7 +57,7 @@ const handleLogout = () => {
 
           <FiChevronRight className="arrowIcon"/>
         </div>
-
+        {/* საგანგებო ნომრების გახსნა */}
         <div className="moreCard" onClick={() => setModalType("numbers")}>
           <div className="moreIconBox">
             <FiPhone/>
@@ -62,7 +70,7 @@ const handleLogout = () => {
 
           <FiChevronRight className="arrowIcon"/>
         </div>
-
+        {/* ანგარიშიდან გამოსვლა */}
         <div className="moreCard" onClick={handleLogout}>
           <div className="moreIconBox">
             <FiLogOut/>
@@ -75,21 +83,22 @@ const handleLogout = () => {
 
           <FiChevronRight className="arrowIcon"/>
         </div>
-
+        {/* აპლიკაციის ვერსიის ჩვენება */}
         <div className="versionBox">
           <Logo size="large" />
           <p>ვერსია 1.0.0</p>
         </div>
-
+        {/* Modal ფანჯარა */}
         {modalType && (
             <div className="moreModalOverlay">
               <div className="moreModal">
+                {/* Modal-ის სათაური */}
                 <h2>
                   {modalType === "about"
                       ? "აპლიკაციის შესახებ"
                       : "საგანგებო ნომრები"}
                 </h2>
-
+                {/* GeoAlert-ის აღწერა */}
                 {modalType === "about" ? (
                     <p>
                       GeoAlert არის ბუნებრივი კატასტროფების ადრეული გაფრთხილების
@@ -97,6 +106,7 @@ const handleLogout = () => {
                       და შესაძლო საფრთხეების შესახებ მათი მდებარეობის მიხედვით.
                     </p>
                 ) : (
+                    /* საგანგებო ნომრების ჩამონათვალი */
                     <div className="numbersList">
                       <p><strong>112</strong> — ერთიანი საგანგებო სამსახური</p>
 
@@ -111,12 +121,12 @@ const handleLogout = () => {
                       <p><strong>125</strong> — დაცვის პოლიცია</p>
                     </div>
                 )}
-
+                {/* Modal-ის დახურვა */}
                 <button onClick={() => setModalType(null)}>დახურვა</button>
               </div>
             </div>
         )}
-
+        {/* ქვედა ნავიგაციის მენიუ */}
         <div className="bottomNav">
           <Link to="/home" className="navItem">
             <FiHome/>

@@ -12,10 +12,13 @@ import {
 } from "react-icons/fi";
 import "./Notifications.css";
 
+// მომხმარებლის შეტყობინებების ისტორიის გვერდი
 function Notifications() {
+  // შეტყობინებების და მომხმარებლის ქალაქის state-ები
   const [alerts, setAlerts] = useState([]);
   const [city, setCity] = useState("");
 
+  // ქალაქების ქართული თარგმანები
   const cityTranslations = {
     Tbilisi: "თბილისი",
     Batumi: "ბათუმი",
@@ -27,9 +30,36 @@ function Notifications() {
     Zugdidi: "ზუგდიდი",
     Poti: "ფოთი",
     Senaki: "სენაკი",
+    Borjomi: "ბორჯომი",
     Akhalkalaki: "ახალქალაქი",
+    Tsageri: "ცაგერი",
+    Ambrolauri: "ამბროლაური",
+    Mtskheta: "მცხეთა",
+    Gurjaani: "გურჯაანი",
+    Sighnaghi: "სიღნაღი",
+    Qvareli: "ყვარელი",
+    Lagodekhi: "ლაგოდეხი",
+    Zestaponi: "ზესტაფონი",
+    Samtredia: "სამტრედია",
+    Chiatura: "ჭიათურა",
+    Kobuleti: "ქობულეთი",
+    Ozurgeti: "ოზურგეთი",
+    Lanchkhuti: "ლანჩხუთი",
+    Chokhatauri: "ჩოხატაური",
+    Sukhumi: "სოხუმი",
+    Gagra: "გაგრა",
+    Oni: "ონი",
+    Marneuli: "მარნეული",
+    Bolnisi: "ბოლნისი",
+    Khashuri: "ხაშური",
+    Kareli: "ქარელი",
+    Dusheti: "დუშეთი",
+    Kazbegi: "ყაზბეგი",
+    Mestia: "მესტია",
   };
 
+  // კატასტროფის ტიპის მიხედვით აბრუნებს
+  // სათაურს, აიქონს და ფერს
   const getDisasterConfig = (type) => {
     switch (type) {
       case "Flood":
@@ -75,6 +105,7 @@ function Notifications() {
     }
   };
 
+  // რისკის დონის ტექსტური წარმოდგენა
   const getRiskText = (risk) => {
     if (risk === "High") return "მაღალი საფრთხე";
     if (risk === "Medium") return "საშუალო საფრთხე";
@@ -82,12 +113,15 @@ function Notifications() {
     return "საფრთხე არ არის";
   };
 
+  // გვერდის ჩატვირთვისას იტვირთება
+  // მომხმარებლის ინფორმაცია და მისი შეტყობინებები
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) return;
 
     axios
+      // მომხმარებლის მონაცემების მიღება
       .get("http://127.0.0.1:8000/me", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -97,11 +131,15 @@ function Notifications() {
         const userCity = response.data.city;
         setCity(userCity);
 
-        return axios.get(
-          `http://127.0.0.1:8000/danger-alerts/${userCity}`
-        );
+        // კონკრეტული მომხმარებლის alert-ების მიღება
+        return axios.get("http://127.0.0.1:8000/my-alerts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       })
       .then((response) => {
+        // მიღებული შეტყობინებების შენახვა state-ში
         setAlerts(response.data);
       })
       .catch((error) => {
@@ -112,6 +150,7 @@ function Notifications() {
   return (
     <div className="notificationsPage">
       <div className="notificationsPhone">
+        {/* გვერდის ზედა ნაწილი */}
         <div className="notificationsHeader">
           <Link to="/home" className="backButton">
             <FiArrowLeft />
@@ -120,10 +159,12 @@ function Notifications() {
           <h1>შეტყობინებები</h1>
         </div>
 
+        {/* მომხმარებლის მიმდინარე ქალაქი */}
         <p className="cityText">
           ქალაქი: <span>{cityTranslations[city] || city}</span>
         </p>
 
+        {/* თუ შეტყობინებები არ არსებობს */}
         {alerts.length === 0 ? (
           <div className="emptyCard">
             <div className="emptyIcon">
@@ -139,20 +180,25 @@ function Notifications() {
             </p>
           </div>
         ) : (
+          // შეტყობინებების სია
           <div className="notificationsList">
             {alerts.map((alert) => {
+              // თითოეული alert-ის ვიზუალური კონფიგურაცია
               const config = getDisasterConfig(alert.disaster_type);
 
               return (
                 <div className="notificationCard" key={alert.id}>
+                  {/* კატასტროფის აიქონი */}
                   <div className={`notificationIcon ${config.circleClass}`}>
                     {config.icon}
                   </div>
 
                   <div className="notificationContent">
                     <div className="notificationTop">
+                      {/* კატასტროფის დასახელება */}
                       <h3>{config.title}</h3>
 
+                      {/* რისკის დონის მაჩვენებელი */}
                       <span
                         className={
                           alert.risk_level === "High"
@@ -166,12 +212,21 @@ function Notifications() {
                       </span>
                     </div>
 
+                    {/* რეკომენდაცია მომხმარებლისთვის */}
                     <p className="recommendationText">
                       {alert.recommendation}
                     </p>
 
+                    {/* შეტყობინების თარიღი, დრო და ქალაქი */}
                     <p className="notificationDate">
-                      {new Date(alert.created_at).toLocaleString("ka-GE")}
+                      {new Date(alert.created_at).toLocaleString("ka-GE", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}{" "}
+                      {cityTranslations[alert.city] || alert.city}
                     </p>
                   </div>
                 </div>
