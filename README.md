@@ -191,7 +191,7 @@ pip install -r requirements.txt
 შექმენით `.env` ფაილი და ჩაწერეთ:
 
 ```env
-OPENWEATHER_API_KEY=YOUR_API_KEY
+OPENWEATHER_API_KEY=ff11e175b9b213d7b4aac2185312a11c
 ```
 
 გაუშვით სერვერი:
