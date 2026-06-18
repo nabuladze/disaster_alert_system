@@ -1,18 +1,11 @@
-# გარემოს ცვლადებთან და HTTP request-ებთან სამუშაო ბიბლიოთეკები
-import os
+#HTTP request-ებთან სამუშაო ბიბლიოთეკები
 import requests
-
-# .env ფაილიდან API key-ის ჩატვირთვა
-from dotenv import load_dotenv
 
 # რისკის ანალიზის მოდული
 from app.risk_engine import analyze_risk
 
-# .env ფაილის ჩატვირთვა
-load_dotenv()
-
 # OpenWeather API key
-API_KEY = os.getenv("OPENWEATHER_API_KEY")
+API_KEY ="ff11e175b9b213d7b4aac2185312a11c"
 
 # OpenWeather API-დან მიღებული მონაცემების დამუშავება
 # და რისკის ანალიზის დამატება
