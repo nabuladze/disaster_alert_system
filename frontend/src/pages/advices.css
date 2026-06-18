@@ -184,6 +184,8 @@
 
 .adviceModal h2 {
   margin-top: 0;
+  color: #222;
+  -webkit-text-fill-color: #222;
 }
 
 .closeModal {
@@ -229,4 +231,17 @@
 
 .navItem.active {
   color: #ff3347;
+}
+
+.adviceModal {
+  color: #222;
+}
+
+.adviceModal .adviceList li {
+  color: #333;
+}
+
+.adviceModal .adviceList li span {
+  color: #333;
+  -webkit-text-fill-color: #333;
 }

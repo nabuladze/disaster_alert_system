@@ -59,10 +59,14 @@
   font-size: 15px;
   margin-bottom: 20px;
   background: white;
+  color: #222;
+  -webkit-text-fill-color: #222;
 }
 
 .profileForm input[readonly] {
   background: #fafafa;
+  color: #555;
+  -webkit-text-fill-color: #555;
 }
 
 .profileMessage {
@@ -117,4 +121,15 @@
 
 .navItem.active {
   color: #ff3347;
+}
+
+.profileForm select {
+  color: #222;
+  -webkit-text-fill-color: #222;
+  appearance: auto;
+}
+
+.profileForm select option {
+  color: #222;
+  background: white;
 }

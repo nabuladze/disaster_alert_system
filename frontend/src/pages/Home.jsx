@@ -10,6 +10,8 @@ import {
   FiMoreHorizontal,
   FiBell,
   FiCloudRain,
+  FiCloud,
+  FiSun,
   FiWind,
   FiThermometer,
   FiAlertCircle,
@@ -217,6 +219,26 @@ function Home() {
       weatherData.disaster_type
     : "";
 
+  const getWeatherIcon = () => {
+  if (!weatherData) return <FiCloud />;
+
+  const weather = weatherData.weather.toLowerCase();
+
+  if (weather.includes("rain")) {
+    return <FiCloudRain />;
+  }
+
+  if (weather.includes("cloud")) {
+    return <FiCloud />;
+  }
+
+  if (weather.includes("clear")) {
+    return <FiSun />;
+  }
+
+  return <FiCloud />;
+};
+
   return (
     <div className="homePage">
       <div className="homePhone">
@@ -273,7 +295,7 @@ function Home() {
         <div className="weatherCard">
           <div className="weatherTop">
             <div className="weatherIconBox">
-              <FiCloudRain />
+              {getWeatherIcon()}
             </div>
 
             <div>
